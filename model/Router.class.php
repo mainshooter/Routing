@@ -21,24 +21,23 @@
     }
 
     public function parseRouter() {
-      require_once $this->controller . "Controller.php";
+      require_once 'controller/' . $this->controller . "Controller.php";
 
       $controller = new $this->controller;
       $method = $this->method;
       $parameters = $this->parameters;
-      call_user_func_array($controller, $method, [$parameters]);
+      call_user_func_array(array($controller, $method), [$parameters]);
     }
 
     public function getController() {
       $controller = $this->path[0];
-
       if (file_exists('controller/' . $controller . 'Controller.php')) {
         // Check if there is a controller
         $this->controller = $controller;
       }
       else {
         // We will set the default controller to be used
-        $this->controller = $this->standardMethod;
+        $this->controller = $this->standardController;
       }
     }
 
