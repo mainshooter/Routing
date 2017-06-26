@@ -42,27 +42,35 @@
     }
 
     public function getMethod() {
-      $method = $this->path[1];
+      if (!empty($this->path[1])) {
+        // To check if we have a method comeing in
+        $method = $this->path[1];
+        if (method_exists($this->controller, $method)) {
+          $this->method = $method;
+        }
 
-      if (method_exists($this->controller, $method)) {
-        $this->method = $method;
+        else {
+          $this->method = $this->standardMethod;
+        }
       }
+
       else {
         $this->method = $this->standardMethod;
       }
     }
 
     public function getParameters() {
-      $parameters = $this->path;
-      unset($parameters[0]);
-      unset($parameters[1]);
-      // To remove the method and the controller
-      if (!empty($parameters)) {
+      if (!empty($this->path[0]) && !empty($this->path[1])) {
+        $parameters = $this->path;
+        unset($parameters[0]);
+        unset($parameters[1]);
+        // To remove the method and the controller
         $this->parameters = $parameters;
       }
       else {
         $this->parameters = array();
       }
+
     }
 
     public function routerDebug() {
