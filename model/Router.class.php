@@ -15,11 +15,17 @@
       $this->url = $this->getUrl();
     }
 
+    /**
+     * Parse the url to a array
+     */
     public function parseUrl() {
         $this->path = str_replace($this->installedPath, '', $this->url);
         $this->path = explode('/', $this->path);
     }
 
+    /**
+     * Parse the router calls the controller, method and send some parameters
+     */
     public function parseRouter() {
       require_once 'controller/' . $this->controller . "Controller.php";
 
@@ -29,18 +35,34 @@
       call_user_func_array(array($controller, $method), [$parameters]);
     }
 
+    /**
+     * Gets the controller from the path
+     * We first check if there is a ctrl
+     * If there isn't a ctrl set we set the default ctrl
+     */
     public function getController() {
-      $controller = $this->path[0];
-      if (file_exists('controller/' . $controller . 'Controller.php')) {
-        // Check if there is a controller
-        $this->controller = $controller;
+      if (!empty($this->path[0])) {
+        // Check if there is a path
+        $controller = $this->path[0];
+        if (file_exists('controller/' . $controller . 'Controller.php')) {
+          // Check if there is a controller
+          $this->controller = $controller;
+        }
+        else {
+          // We will set the default controller to be used
+          $this->controller = $this->standardController;
+        }
       }
+
       else {
-        // We will set the default controller to be used
         $this->controller = $this->standardController;
       }
     }
 
+    /**
+     * Gets the method
+     * If the method doens't exists we set a default method
+     */
     public function getMethod() {
       if (!empty($this->path[1])) {
         // To check if we have a method comeing in
@@ -59,6 +81,10 @@
       }
     }
 
+    /**
+     * gets the parameters from the path
+     * We first check if there is any parameters
+     */
     public function getParameters() {
       if (!empty($this->path[0]) && !empty($this->path[1])) {
         $parameters = $this->path;
@@ -94,6 +120,10 @@
       echo "</div>";
     }
 
+    /**
+     * gets the url
+     * @return [string] [The url]
+     */
     public function getUrl() {
       $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
       return($url);
