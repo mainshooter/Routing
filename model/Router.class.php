@@ -71,7 +71,10 @@
         echo "<h2 style='padding: 0; margin: 4px;'>Router debug</h2>";
         echo "Url: " . $this->url;
         echo "<br>";
-        echo "Path: " . var_dump($this->path);
+        echo "Path: ";
+        echo "<pre>";
+          var_dump($this->path);
+        echo "</pre>";
         echo "<br>";
         echo "Controller: " . $this->controller;
         echo "<br>";
