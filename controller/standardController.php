@@ -2,7 +2,7 @@
 
   class standard {
     public function index() {
-      echo "string";
+      include 'view/default-view.html';
     }
   }
 
