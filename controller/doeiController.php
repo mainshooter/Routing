@@ -1,6 +1,6 @@
 <?php
 
-  class doei {
+  class doeiController {
     public function index() {
       echo "DOEI!";
     }
