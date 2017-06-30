@@ -5,6 +5,10 @@
     public $standardController = '';
     public $standardMethod = 'index';
 
+    public $translateControllerNames;
+    // $translateControllerNames[name of the translation] = the name of the real controller
+    // Contains the new value for a controller name
+
     private $url;
     private $path;
     private $controller;
@@ -20,7 +24,17 @@
      */
     public function parseUrl() {
         $this->path = str_replace($this->installedPath, '', $this->url);
+        // We remove the installed path from the url
+        // So we get the correct url
         $this->path = explode('/', $this->path);
+    }
+
+
+    private function translateControllerName() {
+      if (ISSET($this->translateControllerNames[$this->controller])) {
+        // If there is a array in the translate arr with the value we need
+        $this->controller = $this->translateControllerNames[$this->controller];
+      }
     }
 
     /**
