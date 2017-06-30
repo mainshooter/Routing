@@ -43,6 +43,7 @@
     public function parseRouter() {
       require_once 'controller/' . $this->controller . "Controller.php";
 
+      $this->controller = $this->controller . 'Controller';
       $controller = new $this->controller;
       $method = $this->method;
       $parameters = $this->parameters;
