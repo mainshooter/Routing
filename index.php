@@ -8,7 +8,7 @@
   $Router->standardController = 'standard';
 
   $Router->parseUrl();
-  
+
   $Router->getController();
   $Router->getMethod();
   $Router->getParameters();
